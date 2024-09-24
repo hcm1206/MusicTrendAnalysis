@@ -1,0 +1,35 @@
+<!-- 사이트 기본(base) 탬플릿 구조 설정 -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- title 설정 -->
+        <title>{% block title %}{% endblock %}</title> 
+        <!-- static 로드 -->
+        {% load static %} 
+        <!-- 사이트 전체에 적용되는 CSS 로드 -->
+        <link rel="stylesheet" href="{% static 'css/common.css' %}">
+        <!-- 탬플릿 레이아웃에 적용되는 CSS 로드 -->
+        <link rel="stylesheet" href="{% static 'css/template.css' %}">
+        <!-- 헤더에 적용되는 CSS 로드 -->
+        <link rel="stylesheet" href="{% static 'css/header.css' %}">
+        <!-- 푸터에 적용되는 CSS 로드 -->
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    </head>
+    <!-- 크게 헤더, 콘텐츠, 푸터 순으로 구성 -->
+    <!-- 전체 사이트에서 헤더와 푸터는 공통 컴포넌트로 사용되고, 콘텐츠 부분이 각 페이지 별로 다르게 구현됨 -->
+    <body>
+        {% include 'header.html' %} <!-- 헤더 블록 -->
+        <div id="content-wrapper">
+            <div id="content">
+                {% block style %}{% endblock %} <!-- 콘텐츠 블록에만 적용(되도록 의도하는...)될 CSS 블록 -->
+                {% block startscript %}{% endblock %} <!-- 콘텐츠 부분 로드 전에 실행될 스크립트 블록 -->
+                {% block content %}{% endblock %} <!-- 실제 콘텐츠 부분 블록 -->
+                {% block endscript %}{% endblock %} <!-- 콘텐츠 로드 이후 실행될 스크립트(이벤트리스너 등...) 스크립트 블록 -->
+            </div>
+        </div>
+        {% include 'footer.html' %} <!-- 푸터 블록 -->
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<!-- 탬플릿 기본 구조(base)에 적용시키기 위해 base.html 파일에서 extends -->
+{% extends 'base.html' %}
+
+<!-- 세부 페이지 탬플릿 작성 레퍼런스-->
+<!-- 이 구조를 베이스로 세부 페이지 작성-->
+
+<!-- static 로드 -->
+{% load static %} 
+
+<!-- 페이지의 타이틀(탭에 뜨는 글자) 설정-->
+{% block title %}페이지 레퍼런스{% endblock %}
+
+<!-- 페이지의 CSS 적용 공간 -->
+{% block style %}
+{% endblock %}
+
+<!-- 페이지 컴포넌트(컨텐츠) 로드 전에 실행할 스크립트 적용 공간 -->
+{% block startscript %}
+{% endblock %}
+
+<!-- 페이지 실제 내용(컨텐츠) 작성 공간 -->
+{% block content %}
+
+{% endblock %}
+
+<!-- 페이지 컴포넌트(컨텐츠) 로드 후 실행할 스크립트 적용 공간 -->
+{% block endscript %}
+{% endblock %}

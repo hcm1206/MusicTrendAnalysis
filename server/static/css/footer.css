@@ -1,0 +1,18 @@
+/* 푸터 CSS */
+/* 공사 중 */
+
+footer {
+    height: 150px; /* 푸터 height 수정 시 template.css도 같이 수정해줘야 함 */
+    padding: 50px 0;
+    background-color:lightskyblue;
+    text-align: center;
+}
+
+footer p {
+    font-family: 'suite-b';
+    font-size: 20px;
+}
+
+footer p.small {
+    font-size: 16px;
+}

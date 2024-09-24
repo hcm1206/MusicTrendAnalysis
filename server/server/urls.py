@@ -19,7 +19,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.mainPage),
+    path('', views.mainPage), # 루트(메인) 페이지
     path('admin/', admin.site.urls),
 
 ]

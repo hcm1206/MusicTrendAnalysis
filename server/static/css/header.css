@@ -1,0 +1,14 @@
+/* 헤더 CSS */
+/* 공사 중 */
+
+header {
+    background-color: lightskyblue;
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+header h1 {
+    padding-left: 50px;
+    font-family: 'suite-eb';
+}

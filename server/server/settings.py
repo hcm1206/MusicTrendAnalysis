@@ -124,6 +124,10 @@ USE_TZ = True
 # static 경로 : CSS, 이미지 등 정적 파일 저장
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

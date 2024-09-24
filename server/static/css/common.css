@@ -1,0 +1,31 @@
+/* 사이트 전체에 공통으로 적용될 디자인을 담당하는 CSS */
+/* 공사 중 */
+
+/* 사실 common.css와 동일하게 적용되지만 기능적으로 구분하기 위해 분리(공통 디자인 담당)*/
+/* 필요하다면 세부 페이지에서 CSS 속성을 오버라이딩(덮어쓰기) 가능 */
+
+/* 컴포넌트의 모든 마진과 패딩 일괄적으로 제거 */
+/* 미리 제거해놔야 나중에 따로 마진과 패딩 설정할 때 일관성있고 좋습니다 */
+* {
+    margin: 0;
+    padding: 0;
+};
+
+
+/* 스위트(SUITE) 폰트 로드 */
+/* font-family에 'suite'를 적으면 일반 스위트 폰트, 'suite-b'를 적으면 볼드된 스위트 폰트, 'suite-eb'를 적으면 수퍼-볼드된 스위트 폰트 적용 */
+@font-face {
+    font-family: "suite";     
+    src: url("../font/SUITE-Regular.ttf");
+}
+
+@font-face {
+    font-family: "suite-b";     
+    src: url("../font/SUITE-Bold.ttf");
+}
+
+@font-face {
+    font-family: "suite-eb";     
+    src: url("../font/SUITE-ExtraBold.ttf");
+}
+
