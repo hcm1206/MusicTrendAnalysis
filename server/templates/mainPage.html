@@ -1,0 +1,37 @@
+<!-- 메인(프론트) 페이지 파트 -->
+
+<!-- 현재 테스트용 메인 페이지 -->
+<!-- 레이아웃 확정 후 갈아엎을 예정-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MainPage</title>
+    <style>
+        body {
+            align-items: center;
+            text-align: center;
+            transition: 1s;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://i.namu.wiki/i/yTx5FN-DVMKQCFuJx8WewwjL7xeP_mlLJ8IhVu94aUSOTCHKLIxqX72sB4eGafS-YVKSa6CAqXrxX9jjyWuPnHC3YhpPZuup4_ElDJFUrycti0ecmDsbig5MZTVR-iXZt1KSo3HmfthiIInbSAw-HQ.webp">
+    <h1>Django 개발 환경 세팅 및 정상화 완료</h1>
+
+    <script>
+        const colors = ['azure', 'cadetblue', 'cornsilk'];
+        let currentIndex = 0;
+      
+        function changeBackgroundColor() {
+          document.body.style.backgroundColor = colors[currentIndex];
+          currentIndex = (currentIndex + 1) % colors.length;
+        }
+      
+        setInterval(changeBackgroundColor, 1000);
+      </script>
+
+</body>
+</html>
