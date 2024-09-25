@@ -1,21 +1,44 @@
 /* 메인 페이지 CSS */
 /* 공사 중 */
 
+/* 메인페이지의 콘텐츠 전체를 감싸는 틀 */
 #main-wrapper {
+    display: flex;
+    flex-direction: column;
     padding: 0 10%;
     align-items: center;
     text-align: center;
     transition: 1s;
 }
 
+/* 그냥 큰 글씨 영역 */
 h1 {
     font-family: 'suite-eb';
 }
 
+/* 신창섭 사진 */
 #scs {
     margin: 50px 0;
 }
 
+/* 그냥 작은 글씨 영역 */
 #text {
     padding: 100px 0;
+}
+
+/* 그냥 버튼 디자인 */
+#chartbutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 80px;
+    margin-bottom: 50px;
+    border: none;
+    border-radius: 10px;
+    background-color: cyan;
+    font-family: 'suite-b';
+    font-weight: bold;
+    font-size: 20pt;
+    cursor: pointer;
 }

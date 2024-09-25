@@ -1,6 +1,7 @@
 /* 헤더 CSS */
 /* 공사 중 */
 
+/* 헤더 전체 영역 */
 header {
     background-color: lightskyblue;
     height: 100px;
@@ -8,7 +9,9 @@ header {
     align-items: center;
 }
 
+/* 헤더 (임시) 로고 글자 */
 header h1 {
     padding-left: 50px;
     font-family: 'suite-eb';
+    cursor: pointer;
 }

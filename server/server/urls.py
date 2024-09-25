@@ -20,6 +20,6 @@ from . import views
 
 urlpatterns = [
     path('', views.mainPage), # 루트(메인) 페이지
+    path('chart/', views.chartPage), # 차트 테스트 페이지
     path('admin/', admin.site.urls),
-
 ]
