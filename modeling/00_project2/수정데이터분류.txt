@@ -8,13 +8,19 @@ index
 해당 한 주(week) 일요일
 'week' == 'st_day' // train test 데이터 분할에 사용 하려고 분리, , 
 
+<<<<<<< HEAD
 아티스트이름
 'artist', 
 노래제목
 'name', 
+=======
+아티스트이름  /노래제목     /타이틀곡
+'artist'      /'name'       /'title_song'
+
+>>>>>>> ab6cfb9 (2409261700-1)
 
 
------- 더미
+
 성별
 'sex_female', 'sex_male', 'sex_mixed',
 노래장르
@@ -29,22 +35,16 @@ index
 'active_type_Band', 'active_type_Duet', 'active_type_Group',
        'active_type_Project', 'active_type_Solo',
        
------- 정규화 특성: min-max  길이가 일정한경우
 플레이타임
  'runtime'
 
-
------- 더미
 10구간 유튜브순위
 'you_rank_g_1', 'you_rank_g_2',
        'you_rank_g_3', 'you_rank_g_4', 'you_rank_g_5', 'you_rank_g_6',
        'you_rank_g_7', 'you_rank_g_8', 'you_rank_g_9', 'you_rank_g_10',
-
------- 정규화 특성:  로그변환, 이상치가 많지 않다고 판단되면 min-max                
+             
 유튜브 시청수
 'total_view'
-
-
 
 구글트렌드지수 
 'gg_score', 
@@ -54,15 +54,13 @@ index
 소속사 네이버 트렌드지수
 'pd_score', 
 
-
---------- xxxx
 dc 게시물총수 / 주간 평균추천수 / 평균 조회수
 'dc_total_numb', 'dc_mean_reccomend', 'dc_mean_views',
 
-----------   min-max 정규화
 ost곡 프로그램시청률
 'drama_view', 
 
+<<<<<<< HEAD
 
 어느랭크그룹
 'rank_g', , , , 
@@ -84,8 +82,19 @@ ost곡 프로그램시청률
 타이틀곡이냐
 'title_song'
 
+=======
+계절별 
+,'season_genre_score',, 'season_spring', 'season_summer','season_fall','season_winter'
+
+어느랭크그룹화 1~200  10단위 20개 그룹화
+'rank_g', , , , 
+
+
+>>>>>>> ab6cfb9 (2409261700-1)
 주간곡 순위?? 1 or 0 임
 'rank'
+
+
  이전곡 마지막 순위 
 'previous_ranking_1',
        'previous_ranking_10', 'previous_ranking_100', 'previous_ranking_110',
@@ -95,10 +104,45 @@ ost곡 프로그램시청률
        'previous_ranking_200', 'previous_ranking_30', 'previous_ranking_40',
        'previous_ranking_50', 'previous_ranking_60', 'previous_ranking_70',
        'previous_ranking_80', 'previous_ranking_90', 'previous_ranking_nan',
-100위 안에 가수가 얼마나 많이 차트에 곡을 올렸는지
+
+같은곡 이 얼마나 오랫동안 몇주동안 랭크되어 있었는지
  'top_freq'
 
 계절별 
 ,'season_genre_score',, 'season_spring', 'season_summer','season_fall','season_winter'
 아마도 예측된 랭크 
+<<<<<<< HEAD
    'rank_g_pred
+=======
+   'rank_g_pred
+
+
+
++ 노래방 순위
++ 
+
+
+
+방송협회 방송횟ㅅ
+저작권
+앨범 판매량
+SNS 언급량
+공연/라이브 활동
+방송 노출: *** 멜론 확인필요 
+음악 스트리밍 서비스 데이터
+뮤직비디오 시청 지속 시간: 
+가수의 사회적 이슈:
+음반 기획사나 프로듀서의 영향력:
+해외 인기차트
+장르간의 상호변환 
+경제와의 관계
+청취 연령대
+어떤언어로 
+가사의 내용 
+시간별 트렌드
+비트수
+밈/커버영상
+콘서트날자
+가수 전작의 성공
+
+>>>>>>> ab6cfb9 (2409261700-1)
