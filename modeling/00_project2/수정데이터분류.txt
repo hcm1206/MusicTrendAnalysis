@@ -1,0 +1,104 @@
+https://yoogunwook.github.io/1nurse4stat/final.html#1_introduction_of_project
+
+
+
+index
+'X1', 
+
+해당 한 주(week) 일요일
+'week' == 'st_day' // train test 데이터 분할에 사용 하려고 분리, , 
+
+아티스트이름
+'artist', 
+노래제목
+'name', 
+
+
+------ 더미
+성별
+'sex_female', 'sex_male', 'sex_mixed',
+노래장르
+'genre_All', 'genre_Ani/Game', 'genre_Ballad', 'genre_Blues/Folk',
+       'genre_Dance', 'genre_Drama', 'genre_Electronica',
+       'genre_Foreign Movie', 'genre_Indi', 'genre_Jazz', 'genre_Pop',
+       'genre_R&B/Soul', 'genre_Rap/Hiphop', 'genre_Rock', 'genre_Trot',
+       'genre_carol'
+음악종류
+ 'song_type_K_POP', 'song_type_OST', 'song_type_Others', 'song_type_POP',
+가수유형
+'active_type_Band', 'active_type_Duet', 'active_type_Group',
+       'active_type_Project', 'active_type_Solo',
+       
+------ 정규화 특성: min-max  길이가 일정한경우
+플레이타임
+ 'runtime'
+
+
+------ 더미
+10구간 유튜브순위
+'you_rank_g_1', 'you_rank_g_2',
+       'you_rank_g_3', 'you_rank_g_4', 'you_rank_g_5', 'you_rank_g_6',
+       'you_rank_g_7', 'you_rank_g_8', 'you_rank_g_9', 'you_rank_g_10',
+
+------ 정규화 특성:  로그변환, 이상치가 많지 않다고 판단되면 min-max                
+유튜브 시청수
+'total_view'
+
+
+
+구글트렌드지수 
+'gg_score', 
+
+네이버 트렌드 지수
+'nv_score' 
+소속사 네이버 트렌드지수
+'pd_score', 
+
+
+--------- xxxx
+dc 게시물총수 / 주간 평균추천수 / 평균 조회수
+'dc_total_numb', 'dc_mean_reccomend', 'dc_mean_views',
+
+----------   min-max 정규화
+ost곡 프로그램시청률
+'drama_view', 
+
+
+어느랭크그룹
+'rank_g', , , , 
+
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+타이틀곡이냐
+'title_song'
+
+주간곡 순위?? 1 or 0 임
+'rank'
+ 이전곡 마지막 순위 
+'previous_ranking_1',
+       'previous_ranking_10', 'previous_ranking_100', 'previous_ranking_110',
+       'previous_ranking_120', 'previous_ranking_130', 'previous_ranking_140',
+       'previous_ranking_150', 'previous_ranking_160', 'previous_ranking_170',
+       'previous_ranking_180', 'previous_ranking_190', 'previous_ranking_20',
+       'previous_ranking_200', 'previous_ranking_30', 'previous_ranking_40',
+       'previous_ranking_50', 'previous_ranking_60', 'previous_ranking_70',
+       'previous_ranking_80', 'previous_ranking_90', 'previous_ranking_nan',
+100위 안에 가수가 얼마나 많이 차트에 곡을 올렸는지
+ 'top_freq'
+
+계절별 
+,'season_genre_score',, 'season_spring', 'season_summer','season_fall','season_winter'
+아마도 예측된 랭크 
+   'rank_g_pred
