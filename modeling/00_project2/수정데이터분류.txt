@@ -12,7 +12,11 @@ index
 'artist', 
 노래제목
 'name', 
+타이틀곡이냐
+'title_song'
 
+성별 , 노래장르 , 음악종류 , 가수유형 , 플레이타임, 유튜브순위, 유튜브시청수 ,구글 네이버 트랜드지수
+DC , ost드라마, 랭크g, 계절 
 
 ------ 더미
 성별
@@ -64,6 +68,14 @@ ost곡 프로그램시청률
 'drama_view', 
 
 
+계절별 
+,'season_genre_score',, 'season_spring', 'season_summer','season_fall','season_winter'
+
+
+
+       
+
+
 어느랭크그룹
 'rank_g', , , , 
 
@@ -71,18 +83,10 @@ ost곡 프로그램시청률
 
 
 
-       
 
 
 
 
-
-
-
-
-
-타이틀곡이냐
-'title_song'
 
 주간곡 순위?? 1 or 0 임
 'rank'
@@ -98,7 +102,33 @@ ost곡 프로그램시청률
 100위 안에 가수가 얼마나 많이 차트에 곡을 올렸는지
  'top_freq'
 
-계절별 
-,'season_genre_score',, 'season_spring', 'season_summer','season_fall','season_winter'
+
 아마도 예측된 랭크 
    'rank_g_pred
+
+
+
+
+앨범 판매량
+SNS 언급량
+공연/라이브 활동
+
+방송 노출: *** 멜론 확인필요
+
+음악 스트리밍 서비스 데이터
+뮤직비디오 시청 지속 시간: 
+가수의 사회적 이슈:
+음반 기획사나 프로듀서의 영향력:
+해외 인기차트
+
+장르간의 상호변환 
+경제와의 관계
+청취 연령대
+어떤언어로 
+가사의 내용 
+시간별 트렌드
+비트수
+밈/커버영상
+콘서트날자
+가수 전작의 성공
+
