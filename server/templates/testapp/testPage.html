@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+<!-- 테스트앱 메인 페이지 탬플릿 -->
+
+<!-- static 로드 -->
+{% load static %} 
+
+{% block title %}Test{% endblock %}
+
+<!-- CSS 적용 공간 -->
+{% block style %}
+<style>
+    #main-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #main-wrapper h1 {
+        margin-top:100px;
+        font-family: 'suite-eb';
+        font-size: 30pt;
+    }
+</style>
+{% endblock %}
+
+<!-- 페이지 로드 전에 실행할 스크립트 공간 -->
+{% block startscript %}
+
+{% endblock %}
+
+<!-- 실제 페이지에 표시될 HTML 탬플릿 작성 -->
+{% block content %}
+<div id="main-wrapper">
+    <h1>테스트용 페이지입니다.</h1>
+</div>
+{% endblock %}
+
+<!-- 페이지 로드 후에 실행할 스크립트 공간 -->
+{% block endscript %}
+
+{% endblock %}

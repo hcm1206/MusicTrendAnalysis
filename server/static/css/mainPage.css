@@ -4,10 +4,12 @@
 /* 메인페이지의 콘텐츠 전체를 감싸는 틀 */
 #main-wrapper {
     display: flex;
-    flex-direction: column;
-    padding: 0 10%;
     align-items: center;
     text-align: center;
+    flex-direction: column;
+    padding: 0 10%;
+    min-height: calc(100vh - 150px);
+    transition-property: "background-color";
     transition: 1s;
 }
 
@@ -16,29 +18,36 @@ h1 {
     font-family: 'suite-eb';
 }
 
-/* 신창섭 사진 */
-#scs {
-    margin: 50px 0;
-}
-
 /* 그냥 작은 글씨 영역 */
 #text {
     padding: 100px 0;
 }
 
+#buttonDiv {
+    display: flex;
+    flex-direction: column;
+}
+
 /* 그냥 버튼 디자인 */
-#chartbutton {
+#buttonSection div {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 250px;
     height: 80px;
-    margin-bottom: 50px;
+    margin: 50px 0;
     border: none;
     border-radius: 10px;
-    background-color: cyan;
     font-family: 'suite-b';
     font-weight: bold;
     font-size: 20pt;
     cursor: pointer;
+}
+
+#chartbutton {
+    background-color: cyan;
+}
+
+#testbutton {
+    background-color: lime;
 }
