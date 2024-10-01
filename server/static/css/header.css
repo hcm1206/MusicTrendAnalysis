@@ -12,6 +12,5 @@ header {
 /* 헤더 (임시) 로고 글자 */
 header h1 {
     padding-left: 50px;
-    font-family: 'suite-eb';
     cursor: pointer;
 }

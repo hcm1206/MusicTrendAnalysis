@@ -13,10 +13,6 @@
     transition: 1s;
 }
 
-/* 그냥 큰 글씨 영역 */
-h1 {
-    font-family: 'suite-eb';
-}
 
 /* 그냥 작은 글씨 영역 */
 #text {
