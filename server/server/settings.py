@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'testapp',
     'chart',
+    'chartlist',
 ]
 
 MIDDLEWARE = [
