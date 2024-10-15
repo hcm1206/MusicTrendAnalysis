@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block title %}Song{% endblock %}
+
+{% block style %}
+<style>
+    #content-wrapper {
+        text-align: center;
+        padding: 0 10%;
+    }
+
+    h1 {
+        margin: 30px 0;
+    }
+
+    h2 {
+        margin: 20px 0;
+    }
+
+    #table-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    table {
+        border: 1px solid gray;
+        border-collapse: collapse;
+        width: 80%;
+        margin-left: 10%;
+    }
+    th {
+        border: 1px solid gray;
+    }
+    td {
+        border: 1px solid gray;
+        height: 40px;
+    }
+    #chart-wrapper {
+        width:80%; 
+        padding-left: 10%; 
+        margin: 50px 0;
+    }
+    #chart-wrapper canvas {
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block startscript %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div id="content-wrapper">
+    <h1>{{year}}년 {{month}}월 {{day}}일</h1>
+    <table>
+        <tr>
+            <th>랭킹</th>
+            <td>{{rank}}</td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td>{{title}}</td>
+        </tr>
+        <tr>
+            <th>가수</th>
+            <td>{{artist}}</td>
+        </tr>
+        <tr>
+            <th>소속사</th>
+            <td>{{production}}</td>
+        </tr>
+        <tr>
+            <th>장르</th>
+            <td>{{genre}}</td>
+        </tr>
+        <tr>
+            <th>재생시간</th>
+            <td>{{runtime}}</td>
+        </tr>
+        <tr>
+            <th>노래방 차트 순위</th>
+            {% if ky_rank is None %}
+                <td>NA</td>
+            {% else %}
+                <td>{{ky_rank}}</td>
+            {% endif %}
+        </tr>
+    </table>
+    <!-- 차트가 그려지는 태그는 canvas 태그이고, canvas 태그는 별도의 div 태그로 감싸서 div 태그의 크기를 통해 차트의 크기를 조절할 수 있음. -->
+    <div id="chart-wrapper"> <!-- 차트 감싸는 태그 -->
+        <canvas id="chart"></canvas> <!-- 실제 차트가 그려지는 태그 -->
+    </div>
+</div>
+{% endblock %}
+
+{% block endscript %}
+<script>
+    // ======================== Chart 생성하는 스크립트 ========================
+    // 먼저 API로 받아온 시계열 데이터(JSON 형식)을 로드
+    const prevRanks = JSON.parse('{{ ranks|escapejs }}');
+    //const predictedData = JSON.parse('{{ predicted_list|escapejs }}');
+    // 라벨로 사용할 배열 선언
+    const labels = [];
+    // 라벨 배열에 "n(1~52)주차" 문자열을 저장 
+    // for (let i = 1; i <= prevRanks.length; ++i) {
+    //     labels.push(i.toString() + "주차");
+    // }
+    // labels[labels.length - 1] += " 예측";
+    // 차트에 넣을 데이터 객체 선언
+    const data = {
+        labels: labels, 
+        // 데이터셋 목록 설정(데이터 개수를 2개 이상 설정할 수도 있음)
+        datasets: [
+            {
+                label: '주간 차트 순위', // 데이터 라벨(텍스트) 설정
+                data: prevRanks, // 출력할 데이터 설정
+                borderColor: 'red' // 선 색깔 설정
+            },
+            // {
+            //     label: '예측 차트 순위',
+            //     data: predictedData,
+            //     borderColor: 'orange',
+            //     borderDash: [5, 5],
+            // }
+        ]
+    };
+
+    console.log(labels);
+
+    // 차트 객체 생성 및 HTML 태그(canvas 태그)에 적용
+    const ctx = new Chart(
+        document.getElementById('chart'), // 차트를 그릴 canvas 태그를 태그 ID명을 통해 지정 지정
+        {
+            type: 'line', // 차트 종류(선형 그래프, 막대 그래프 등) 설정
+            data: data, // 차트에 넣을 데이터 객체 입력
+            options: { // 차트 옵션
+                responsive: true, // 반응형 차트 설정
+                maintainAspectRatio: false, // false 해두지 않으면 차트 크기가 한번 작아지면 다시 커지지 않는 현상 발생
+                plugins: { 
+                    title: { // 차트 타이틀 설정(크기가 너무 개미눈물만한데 수정할 수 있을지 추후 확인, 아니면 그냥 별도 h1 태그를 출력해도 되고)
+                        display: true,
+                        text: '주간 랭크 추이 및 예측'
+                    },
+                },
+                interaction: {
+                    intersect: false, // false로 해놓으면 마우스가 정확한 위치에 있지 않아도 차트 정보를 적절하게 출력
+                },
+                scales: { // 차트 축 설정
+                    x: { // x축 설정
+                        display: true,
+                        title: {
+                            display: true,
+                            text: '주차'
+                        }
+                    }, // y축 설정
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: '순위'
+                        },
+                        min: 0,
+                        max: 200,
+                        reverse: true, // 기본 세팅은 아래쪽이 작은 값, 위쪽이 큰 값인데 우리는 순위 데이터를 사용하니 반대로 설정
+                    }
+                }
+            },
+        }
+    );
+</script>
+{% endblock %}
