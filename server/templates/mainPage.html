@@ -10,6 +10,40 @@
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'css/mainPage.css' %}">
+<style>
+    body {
+        background-color: #fcfbf9; /* 이미지 배경색과 동일하게 설정 */
+    }
+
+    #main-wrapper {
+        display: flex; /* 플렉스 레이아웃 적용 */
+        justify-content: center; /* 중앙 정렬 */
+        align-items: center; /* 세로 중앙 정렬 */
+        height: 100vh; /* 전체 화면 높이 */
+    }
+
+    #main-wrapper img {
+        max-width: 500px; /* 이미지 크기 조정 */
+        height: auto; /* 비율을 유지하면서 세로로 늘어나는 문제 해결 */
+        margin-right: 50px; /* 이미지와 버튼 사이 간격 */
+        object-fit: contain; /* 이미지 비율 유지 */
+        flex-shrink: 0; /* 이미지 크기를 줄이지 않도록 설정 */
+    }
+
+    #buttonSection {
+        display: flex;
+        flex-direction: column; /* 버튼들을 수직으로 배치 */
+        gap: 3px; /* 버튼 사이 간격 */
+    }
+
+    #buttonSection div {
+        padding: 10px 20px;
+        text-align: center;
+        border: 1px solid #000;
+        border-radius: 5px;
+        background-color: lightblue;
+    }
+</style>
 {% endblock %}
 
 {% block startscript %}
@@ -17,6 +51,7 @@
 
 {% block content %}
 <div id="main-wrapper">
+    <img src="{% static 'jpg/나침반2.jpg' %}" alt="Compass Image">
     <div id="buttonSection">
         <div id="chartbutton">차트 예제</div>
         <div id="testbutton">테스트 페이지</div>
