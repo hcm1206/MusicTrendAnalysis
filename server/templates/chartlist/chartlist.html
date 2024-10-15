@@ -6,14 +6,72 @@
 {% block title %}TOP 200{% endblock %}
 
 {% block style %}
+<style>
+    #main-wrapper {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        flex-direction: column;
+        padding: 0 10%;
+    }
+    
+    #main-wrapper > h1 {
+        margin: 40px 0 20px 0;
+    }
+    #main-wrapper > h2 {
+        font-size: 15px;
+        margin: 20px 0;
+        right: 0;
+    }
+
+    #chart_table {
+        width: 90%;
+        border-collapse: collapse;
+        border: 1px solid black;
+    }
+
+    #chart_table td {
+        border: 1px solid gray;
+        height: 60px;
+    }
+
+    #chart_table th {
+        border: 1px solid gray;
+        height: 60px;
+    }
+
+</style>
 {% endblock %}
 
 {% block startscript %}
 {% endblock %}
 
+<!-- 인덱스 적용 탬플릿 필터 사용하기 위함 -->
+{% load custom_filters %}
+
 {% block content %}
-    <h1>ㅅㄱ</h1>
-    <h2>{{year}}년 {{month}}월 {{day}}일 {{weekday}}요일</h2>
+<div id="main-wrapper">
+    <h1>Circle Chart TOP 200</h1>
+    <h2>{{year}}년 {{month}}월 {{day}}일 기준</h2>
+    <table id="chart_table">
+        <tr>
+            <th>Rank</th>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Production</th>
+            <th>Genre</th>
+        </tr>
+        {% for row in chart_data %}
+        <tr onclick="location.href = '/chartlist/{{date}}/{{row|index:0}}';">
+            {% for row_data in row %}
+            <td>
+                {{row_data}}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}
 
 {% block endscript %}
