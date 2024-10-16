@@ -54,7 +54,7 @@ def chartSongPage(request, date, rank):
 
     # ========== 데이터 확보 ==========
 
-    data = pd.read_csv("../new_data/DBData.csv") # DB 연동 시 이 부분을 DB와 통신하여 SQL 문으로 설정
+    data = pd.read_csv("../new_data/DBdata2410161600.csv", index_col=0) # DB 연동 시 이 부분을 DB와 통신하여 SQL 문으로 설정
 
     # ========== 모델 예측 결과 추출 ==========
 
@@ -66,8 +66,8 @@ def chartSongPage(request, date, rank):
         n_score_scaler = pickle.load(f)
     with open('../new_data/scalers/g_score_scaler.pkl', 'rb') as f:
         g_score_scaler = pickle.load(f)
-    with open('../new_data/scalers/previous_rank_scaler.pkl', 'rb') as f:
-        previous_rank_scaler = pickle.load(f)
+    # with open('../new_data/scalers/previous_rank_scaler.pkl', 'rb') as f:
+    #     previous_rank_scaler = pickle.load(f)
 
     input_data[["Weekly Views"]] = views_scaler.transform(input_data[["Weekly Views"]])
     input_data[["n_score"]] = n_score_scaler.transform(input_data[["n_score"]])
@@ -81,7 +81,6 @@ def chartSongPage(request, date, rank):
     predicted_rank = int(model.predict(input_data)[0][0])
 
     # ========== 웹 페이지에 출력하기 위한 곡 정보 추출 ==========
-
     weekly_info = data[(data["date"] == checkday.strftime('%Y-%m-%d')) & (data["Rank"] == int(rank))].iloc[0].replace({np.nan: None})
 
     title = weekly_info["Title"]
@@ -89,7 +88,6 @@ def chartSongPage(request, date, rank):
     production = weekly_info["Production"]
     genre = weekly_info["Genre"]
     runtime = weekly_info["Runtime"]
-    ky_rank = weekly_info["ky_rank"]
 
     # ========== 차트 출력을 위한  ==========
 
@@ -121,14 +119,18 @@ def chartSongPage(request, date, rank):
     date_now = max(date_now, checkday - timedelta(weeks=52))
     chart_in = False
 
+    min_rank = 201
+    max_rank = 0
+
     while date_now <= checkday:
-        
         try:
             rank_now = data[(data["Title"] == title) & (data["Artist"] == artist) & (data["date"] == date_now.strftime('%Y-%m-%d'))][["Rank"]].iloc[0].values
+            min_rank = min(min_rank, int(rank_now[0]))
+            max_rank = max(max_rank, int(rank_now[0]))
             prev_rank_list.append(int(rank_now[0]))
             prev_date_list.append(date_now.strftime('%Y-%m-%d'))
             if date_now == checkday:
-            
+                predicted_rank_list.append(predicted_rank)
             elif date_now == checkday - timedelta(days=7):
                 predicted_rank_list.append(int(rank_now[0]))
             else:
@@ -138,15 +140,20 @@ def chartSongPage(request, date, rank):
             if chart_in:
                 prev_rank_list.append(None)
                 prev_date_list.append(date_now.strftime('%Y-%m-%d'))
-                predicted_rank_list(None)
+                predicted_rank_list.append(None)
         date_now += timedelta(days=7)
+
+    min_rank = min(min_rank, predicted_rank)
+    max_rank = max(max_rank, predicted_rank)
 
     # ====================================================
     
 
     prev_rank_list_json = json.dumps(prev_rank_list).replace('None', 'null')
     prev_date_list_json = json.dumps(prev_date_list).replace('None', 'null')
+    predicted_rank_list_json = json.dumps(predicted_rank_list).replace('None', 'null')
 
+    chart_length = len(prev_rank_list)
 
 
 
@@ -160,10 +167,13 @@ def chartSongPage(request, date, rank):
         'production' : production,
         'genre' : genre,
         'runtime' : runtime,
-        'ky_rank' : ky_rank,
         'prev_rank_list' : prev_rank_list_json,
         'prev_date_list' : prev_date_list_json,
         'predicted_rank' : predicted_rank,
+        'predicted_rank_list' : predicted_rank_list_json,
+        'chart_length' : chart_length,
+        'min_rank' : max((min_rank - 10) // 10 * 10, 0),
+        'max_rank' : min((max_rank + 10) // 10 * 10, 200),
     }
 
     return render(request, 'chartlist/chartsong.html', content)

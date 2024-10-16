@@ -82,11 +82,18 @@
             <td>{{runtime}}</td>
         </tr>
     </table>
-    <h1>모델 예측 순위 : {{predicted_rank}}위</h1>
-    <!-- 차트가 그려지는 태그는 canvas 태그이고, canvas 태그는 별도의 div 태그로 감싸서 div 태그의 크기를 통해 차트의 크기를 조절할 수 있음. -->
-    <div id="chart-wrapper"> <!-- 차트 감싸는 태그 -->
-        <canvas id="chart"></canvas> <!-- 실제 차트가 그려지는 태그 -->
-    </div>
+    {% if chart_length <= 1 %}
+        <h1>New Song</h1>
+        <h3>해당 주에 발매된 신곡입니다.</h3>
+    {% else %}
+        <h1>모델 예측 순위 : {{predicted_rank}}위</h1>
+        {% if chart_length <= 4 %}
+            <h3>예측 정확도가 낮을 수 있습니다.</h3>
+        {% endif %}
+        <div id="chart-wrapper">
+            <canvas id="chart"></canvas> <!-- 현재 곡의 역대 랭킹 그래프 출력 태그 -->
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
 
@@ -101,6 +108,8 @@
     // 라벨로 사용할 배열 선언
     // const prevDates = JSON.parse('{{ prev_date_list|escapejs }}')
     const prevDates = JSON.parse('{{ prev_date_list|safe }}');
+
+    const predictedRanks = JSON.parse('{{ predicted_rank_list|safe }}');
     
     console.log(prevDates)
     // 라벨 배열에 "n(1~52)주차" 문자열을 저장 
@@ -118,12 +127,12 @@
                 data: prevRanks, // 출력할 데이터 설정
                 borderColor: 'red' // 선 색깔 설정
             },
-            // {
-            //     label: '예측 차트 순위',
-            //     data: predictedData,
-            //     borderColor: 'orange',
-            //     borderDash: [5, 5],
-            // }
+            {
+                label: '예측 차트 순위',
+                data: predictedRanks,
+                borderColor: 'orange',
+                borderDash: [5, 5],
+            }
         ]
     };
 
@@ -150,7 +159,7 @@
                         display: true,
                         title: {
                             display: true,
-                            text: '주차'
+                            text: '주'
                         }
                     }, // y축 설정
                     y: {
@@ -159,8 +168,8 @@
                             display: true,
                             text: '순위'
                         },
-                        min: 0,
-                        max: 200,
+                        min: {{min_rank}},
+                        max: {{max_rank}},
                         reverse: true, // 기본 세팅은 아래쪽이 작은 값, 위쪽이 큰 값인데 우리는 순위 데이터를 사용하니 반대로 설정
                     }
                 }
