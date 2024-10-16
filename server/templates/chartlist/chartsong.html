@@ -81,15 +81,8 @@
             <th>재생시간</th>
             <td>{{runtime}}</td>
         </tr>
-        <tr>
-            <th>노래방 차트 순위</th>
-            {% if ky_rank is None %}
-                <td>NA</td>
-            {% else %}
-                <td>{{ky_rank}}</td>
-            {% endif %}
-        </tr>
     </table>
+    <h1>모델 예측 순위 : {{predicted_rank}}위</h1>
     <!-- 차트가 그려지는 태그는 canvas 태그이고, canvas 태그는 별도의 div 태그로 감싸서 div 태그의 크기를 통해 차트의 크기를 조절할 수 있음. -->
     <div id="chart-wrapper"> <!-- 차트 감싸는 태그 -->
         <canvas id="chart"></canvas> <!-- 실제 차트가 그려지는 태그 -->
@@ -102,12 +95,13 @@
     // ======================== Chart 생성하는 스크립트 ========================
     // 먼저 API로 받아온 시계열 데이터(JSON 형식)을 로드
     // const prevRanks = JSON.parse('{{ prev_rank_list|escapejs }}');
-    const prevRanks = {{ prev_rank_list }};
+    const prevRanks = JSON.parse('{{ prev_rank_list|safe }}');
     console.log(prevRanks);
     //const predictedData = JSON.parse('{{ predicted_list|escapejs }}');
     // 라벨로 사용할 배열 선언
     // const prevDates = JSON.parse('{{ prev_date_list|escapejs }}')
-    const prevDates = {{ prev_date_list }};
+    const prevDates = JSON.parse('{{ prev_date_list|safe }}');
+    
     console.log(prevDates)
     // 라벨 배열에 "n(1~52)주차" 문자열을 저장 
     // for (let i = 1; i <= prevRanks.length; ++i) {
@@ -132,8 +126,6 @@
             // }
         ]
     };
-
-    console.log(labels);
 
     // 차트 객체 생성 및 HTML 태그(canvas 태그)에 적용
     const ctx = new Chart(
