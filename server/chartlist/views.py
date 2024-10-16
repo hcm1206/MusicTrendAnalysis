@@ -66,15 +66,24 @@ def chartSongPage(request, date, rank):
 
     while datetime(year=2023, month=9, day=24) <= date_now and week_cnt <= 52:
         prev_date_list.append(date_now.strftime('%Y-%m-%d'))
-        rank_now = data[(data["Title"] == title) & (data["Artist"] == artist) & (data["date"] == date_now.strftime('%Y-%m-%d'))][["Rank"]].iloc[0].values
-        prev_rank_list.append(rank_now)
+        try:
+            rank_now = data[(data["Title"] == title) & (data["Artist"] == artist) & (data["date"] == date_now.strftime('%Y-%m-%d'))][["Rank"]].iloc[0].values
+            prev_rank_list.append(rank_now[0])
+        except IndexError as e:
+            prev_rank_list.append(None)
+        date_now -= timedelta(days=7)
         week_cnt += 1
 
     print(prev_rank_list)
+    print(type[prev_rank_list[0]])
     print(prev_date_list)
+
     prev_ranks = data[(data["Title"] == title) & (data["Artist"] == artist)][["date", "Rank"]]
     prev_ranks_list = prev_ranks.to_numpy().tolist()
     prev_ranks_list_json = json.dumps(prev_ranks_list).replace('None', 'null')
+
+    #prev_rank_list_json = json.dumps(prev_rank_list).replace('None', 'null')
+    prev_date_list_json = json.dumps(prev_date_list).replace('None', 'null')
 
     content = {
         'year' : checkday.year,
@@ -88,6 +97,8 @@ def chartSongPage(request, date, rank):
         'runtime' : runtime,
         'ky_rank' : ky_rank,
         'ranks' : prev_ranks_list_json,
+        'prev_rank_list' : prev_rank_list,
+        'prev_date_list' : prev_date_list_json,
     }
 
     return render(request, 'chartlist/chartsong.html', content)

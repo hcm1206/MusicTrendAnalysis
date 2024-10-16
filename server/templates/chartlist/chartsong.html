@@ -101,10 +101,14 @@
 <script>
     // ======================== Chart 생성하는 스크립트 ========================
     // 먼저 API로 받아온 시계열 데이터(JSON 형식)을 로드
-    const prevRanks = JSON.parse('{{ ranks|escapejs }}');
+    // const prevRanks = JSON.parse('{{ prev_rank_list|escapejs }}');
+    const prevRanks = {{ prev_rank_list }};
+    console.log(prevRanks);
     //const predictedData = JSON.parse('{{ predicted_list|escapejs }}');
     // 라벨로 사용할 배열 선언
-    const labels = [];
+    // const prevDates = JSON.parse('{{ prev_date_list|escapejs }}')
+    const prevDates = {{ prev_date_list }};
+    console.log(prevDates)
     // 라벨 배열에 "n(1~52)주차" 문자열을 저장 
     // for (let i = 1; i <= prevRanks.length; ++i) {
     //     labels.push(i.toString() + "주차");
@@ -112,7 +116,7 @@
     // labels[labels.length - 1] += " 예측";
     // 차트에 넣을 데이터 객체 선언
     const data = {
-        labels: labels, 
+        labels: prevDates, 
         // 데이터셋 목록 설정(데이터 개수를 2개 이상 설정할 수도 있음)
         datasets: [
             {
