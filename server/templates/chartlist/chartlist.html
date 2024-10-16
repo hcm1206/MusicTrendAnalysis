@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+<!-- static 로드 -->
+{% load static %} 
+
+{% block title %}TOP 200{% endblock %}
+
+{% block style %}
+<style>
+    #main-wrapper {
+        padding: 0 10%;
+    }
+    
+    #main-wrapper > h1 {
+        margin: 40px 0 20px 0;
+    }
+
+    #date-container {
+        width: 100%;
+        margin: 30px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #date-label {
+        font-size: 20px;
+        font-weight: bold;
+        margin-right: 20px;
+    }
+
+    .date-calendar-toggle {
+        display: inline-block;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        background-color: gray;
+        border-radius: 10px;
+    }
+    .date-calendar-toggle-button {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+    }
+    #date-calendar-input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+    #date-calendar-input::-webkit-calendar-picker-indicator {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    #table-wrapper {
+        width: 80%;
+        padding-left: 10%;
+    }
+    #chart_table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid black;
+        text-align: center;
+    }
+
+    .chart-content {
+        transition-property: background-color;
+        transition: .3s;
+        cursor:pointer;
+    }
+
+    .chart-content:hover {
+        background-color: lightgrey;
+        transition-property: background-color;
+        transition: .3s;
+    }
+
+    #chart_table td {
+        border: 1px solid gray;
+        height: 60px;
+        font-family: "suite-b";
+    }
+
+    #chart_table th {
+        border: 1px solid gray;
+        height: 60px;
+    }
+</style>
+{% endblock %}
+
+{% block startscript %}
+{% endblock %}
+
+<!-- 인덱스 적용 탬플릿 필터 사용하기 위함 -->
+{% load custom_filters %}
+
+{% block content %}
+<div id="main-wrapper">
+    <h1>Circle Chart TOP 200</h1>
+    <div id="date-container">
+        <div id="date-label">{{year}}년 {{month}}월 {{day}}일 기준</div>
+        <span class="date-calendar-toggle">
+            <span class="date-calendar-toggle-button" style='background-image: url("{% static 'image/calendar-icon.svg' %}");'></span>
+            <input type="date" id="date-calendar-input">
+        </span>
+    </div>
+    <div id="table-wrapper">
+        <table id="chart_table">
+            <tr>
+                <th>Rank</th>
+                <th>Title</th>
+                <th>Artist</th>
+            </tr>
+            {% for row in chart_data %}
+            <tr class="chart-content" onclick="location.href = '/chartlist/{{date}}/{{row|index:0}}';">
+                {% for row_data in row %}
+                <td>
+                    {{row_data}}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block endscript %}
+<script>
+    const dateinput = document.getElementById('date-calendar-input')
+    dateinput.addEventListener("change", (e) => {
+        const selectedDate = e.target.value;
+        location.href = `/chartlist/${selectedDate}`;
+    });
+</script>
+{% endblock %}
