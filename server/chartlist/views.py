@@ -86,11 +86,11 @@ def chartSongPage(request, date, rank):
     input_data = pd.DataFrame([[weekly_views, n_score, g_score, rank_lag_1, rank_lag_2, rank_lag_3]], columns=["Weekly Views", "n_score", "g_score", "Rank_lag_1", "Rank_lag_2", "Rank_lag_3"])
 
     # 피처 데이터를 스케일링하기 위한 스케일러 로드
-    with open('../new_data/scalers/views_scaler.pkl', 'rb') as f:
+    with open('static/models/scalers/views_scaler.pkl', 'rb') as f:
         views_scaler = pickle.load(f)
-    with open('../new_data/scalers/n_score_scaler.pkl', 'rb') as f:
+    with open('static/models/scalers/n_score_scaler.pkl', 'rb') as f:
         n_score_scaler = pickle.load(f)
-    with open('../new_data/scalers/g_score_scaler.pkl', 'rb') as f:
+    with open('static/models/scalers/g_score_scaler.pkl', 'rb') as f:
         g_score_scaler = pickle.load(f)
 
     # 데이터 스케일링
@@ -103,7 +103,7 @@ def chartSongPage(request, date, rank):
     input_data = np.reshape(input_data, (input_data.shape[0], 1, input_data.shape[1]))
 
     # 학습된 keras 모델 로드
-    model = load_model('../modeling/lstm/lstm_model.keras')
+    model = load_model('static/models/lstm_model.keras')
     # 모델에 데이터 입력하여 예측값 생성
     predicted_rank = int(model.predict(input_data)[0][0])
 
