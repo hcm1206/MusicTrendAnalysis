@@ -6,6 +6,7 @@ import numpy as np
 import json
 from keras.models import load_model
 import pickle
+from .models import TBL_MA
 
 def chartlistPage(request, date):
     try:
@@ -19,12 +20,12 @@ def chartlistPage(request, date):
     while checkday.weekday() < 6:
         checkday -= timedelta(days=1)
 
-    data = pd.read_csv("../new_data/DBData.csv")
-    data = data[data["date"] == checkday.strftime('%Y-%m-%d')]
-    data = data[["Rank", "Title", "Artist"]]
+    # data = pd.read_csv("../new_data/DBData.csv")
+    # data = data[data["date"] == checkday.strftime('%Y-%m-%d')]
+    # data = data[["Rank", "Title", "Artist"]]
 
+    data = TBL_MA.objects.filter(Week_Date=checkday.strftime('%Y-%m-%d')).values("Week_Rank", "Title", "Artist")
     
-
     weekday_list = ['일', '월', '화', '수', '목', '금', '토']
 
     content = {
@@ -33,7 +34,7 @@ def chartlistPage(request, date):
         'month' : checkday.month,
         'day' : checkday.day,
         'weekday' : weekday_list[checkday.weekday()],
-        'chart_data' : data.values.tolist(),
+        'chart_data' : data,
     }
 
     return render(request, 'chartlist/chartlist.html', content)
@@ -56,9 +57,21 @@ def chartSongPage(request, date, rank):
 
     data = pd.read_csv("../new_data/DBdata2410161600.csv", index_col=0) # DB 연동 시 이 부분을 DB와 통신하여 SQL 문으로 설정
 
+
+
     # ========== 모델 예측 결과 추출 ==========
 
-    input_data =  data[(data["date"] == checkday.strftime('%Y-%m-%d')) & (data["Rank"] == int(rank))][["Weekly Views", "n_score", "g_score", "Rank_lag_1", "Rank_lag_2", "Rank_lag_3"]]
+    # input_data =  data[(data["date"] == checkday.strftime('%Y-%m-%d')) & (data["Rank"] == int(rank))][["Weekly Views", "n_score", "g_score", "Rank_lag_1", "Rank_lag_2", "Rank_lag_3"]]
+
+    filter_data = TBL_MA.objects.get(Week_Date=checkday.strftime('%Y-%m-%d'), Week_Rank=int(rank))
+    weekly_views = filter_data.Weekly_Views
+    n_score = filter_data.n_score
+    g_score = filter_data.g_score
+    rank_lag_1 = filter_data.Rank_lag_1
+    rank_lag_2 = filter_data.Rank_lag_2
+    rank_lag_3 = filter_data.Rank_lag_3
+
+    input_data = pd.DataFrame([[weekly_views, n_score, g_score, rank_lag_1, rank_lag_2, rank_lag_3]], columns=["Weekly Views", "n_score", "g_score", "Rank_lag_1", "Rank_lag_2", "Rank_lag_3"])
 
     with open('../new_data/scalers/views_scaler.pkl', 'rb') as f:
         views_scaler = pickle.load(f)
@@ -66,13 +79,10 @@ def chartSongPage(request, date, rank):
         n_score_scaler = pickle.load(f)
     with open('../new_data/scalers/g_score_scaler.pkl', 'rb') as f:
         g_score_scaler = pickle.load(f)
-    # with open('../new_data/scalers/previous_rank_scaler.pkl', 'rb') as f:
-    #     previous_rank_scaler = pickle.load(f)
 
     input_data[["Weekly Views"]] = views_scaler.transform(input_data[["Weekly Views"]])
     input_data[["n_score"]] = n_score_scaler.transform(input_data[["n_score"]])
     input_data[["g_score"]] = g_score_scaler.transform(input_data[["g_score"]])
-    # input_data[["Rank_lag_1", "Rank_lag_2", "Rank_lag_3"]] = previous_rank_scaler.transform(input_data[["Rank_lag_1", "Rank_lag_2", "Rank_lag_3"]])
     
     input_data = input_data.to_numpy()
     input_data = np.reshape(input_data, (input_data.shape[0], 1, input_data.shape[1]))
@@ -81,13 +91,12 @@ def chartSongPage(request, date, rank):
     predicted_rank = int(model.predict(input_data)[0][0])
 
     # ========== 웹 페이지에 출력하기 위한 곡 정보 추출 ==========
-    weekly_info = data[(data["date"] == checkday.strftime('%Y-%m-%d')) & (data["Rank"] == int(rank))].iloc[0].replace({np.nan: None})
 
-    title = weekly_info["Title"]
-    artist = weekly_info["Artist"]
-    production = weekly_info["Production"]
-    genre = weekly_info["Genre"]
-    runtime = weekly_info["Runtime"]
+    title = filter_data.Title
+    artist = filter_data.Artist
+    production = filter_data.Production
+    genre = filter_data.Genre
+    runtime = filter_data.Runtime
 
     # ========== 차트 출력을 위한  ==========
 
