@@ -318,6 +318,9 @@ th {
 
 
 
+body {
+    transition: background-color 0.3s ease;  /* 배경색 변경 시 부드러운 전환 효과 */
+}
 
 
 
@@ -333,6 +336,7 @@ th {
 {% load custom_filters %}
 
 {% block content %}
+
 
 <div id="loading-overlay"></div> <!-- 민트색 배경 추가 -->
 <!-- 전체 화면을 덮는 이미지 오버레이 -->
@@ -549,6 +553,36 @@ document.getElementById('artist-header').addEventListener('mouseenter', function
     });
 
 
+
+
+
+
+
+
+
+// 스크롤에 따라 배경색을 변경하는 함수
+window.addEventListener('scroll', function() {
+        // 페이지의 총 스크롤 가능한 높이와 현재 스크롤 위치 계산
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = scrollTop / docHeight;
+
+        // 무지개색을 중간 부분에만 적용 (스크롤 비율이 0.2에서 0.8 사이일 때)
+        let hue = 0;
+        let lightness = 100; // 기본 흰색 (lightness 100%)
+        
+        if (scrollPercent >= 0.2 && scrollPercent <= 0.8) {
+            // 무지개색을 중간에만 적용
+            hue = Math.round((scrollPercent - 0.2) / 0.6 * 360);  // hue 값은 0~360으로 설정
+            lightness = 80; // 색이 연하게 보이도록 lightness 값을 80%로 설정
+        } else if (scrollPercent > 0.8) {
+            // 마지막 부분으로 갈수록 흰색으로 변화
+            lightness = Math.round(100 - (scrollPercent - 0.8) / 0.2 * 100);  // 끝에서 흰색으로 변화
+        }
+
+        // 배경색을 HSL 모델을 사용하여 설정
+        document.body.style.backgroundColor = `hsl(${hue}, 100%, ${lightness}%)`;
+    });
 
 
 </script>
