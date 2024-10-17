@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'MA_DB',        # MySQL에서 생성한 데이터베이스 이름
+        'USER': 'root',            # MySQL 사용자
+        'PASSWORD': 'P@ssw0rd',    # MySQL 사용자 비밀번호
+        'HOST': 'localhost',         # 서버 호스트 (로컬 MySQL의 경우 'localhost')
+        'PORT': '3306', 
     }
 }
 
