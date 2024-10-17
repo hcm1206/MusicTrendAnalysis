@@ -124,6 +124,7 @@
                 <th>Title</th>
                 <th>Artist</th>
             </tr>
+            <!-- !!!! chart-content 부분 아래와 같이 수정하여 DB 쿼리 데이터와 호환되게 변경 -->
             {% for row in chart_data %}
             <tr class="chart-content" onclick="location.href = '/chartlist/{{date}}/{{row.Week_Rank}}';">
                 <td>

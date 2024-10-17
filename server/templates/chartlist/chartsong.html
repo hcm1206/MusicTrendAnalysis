@@ -49,13 +49,16 @@
 </style>
 {% endblock %}
 
+
 {% block startscript %}
+<!-- Chart.JS 라이브러리 외부 로드 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 
 {% block content %}
 <div id="content-wrapper">
     <h1>{{year}}년 {{month}}월 {{day}}일</h1>
+    <!-- 곡 정보를 테이블로 출력 -->
     <table>
         <tr>
             <th>랭킹</th>
@@ -82,12 +85,12 @@
             <td>{{runtime}}</td>
         </tr>
     </table>
-    {% if chart_length <= 1 %}
-        <h1>New Song</h1>
+    {% if chart_length <= 1 %} <!-- 이전 주차 랭킹 데이터가 없다면 새로 발매된 곡이라는 의미이므로 차트와 예측 순위를 출력하지 않음 -->
+        <h1>New Song!</h1>
         <h3>해당 주에 발매된 신곡입니다.</h3>
     {% else %}
         <h1>모델 예측 순위 : {{predicted_rank}}위</h1>
-        {% if chart_length <= 4 %}
+        {% if chart_length <= 4 %} <!-- 과거 랭킹 데이터가 3개 이하이면 예측 성능 문제 경고를 출력 -->
             <h3>예측 정확도가 낮을 수 있습니다.</h3>
         {% endif %}
         <div id="chart-wrapper">
@@ -100,38 +103,30 @@
 {% block endscript %}
 <script>
     // ======================== Chart 생성하는 스크립트 ========================
-    // 먼저 API로 받아온 시계열 데이터(JSON 형식)을 로드
-    // const prevRanks = JSON.parse('{{ prev_rank_list|escapejs }}');
+    // 이전 랭킹 데이터 배열(JSON 형식)을 JS 변수로 선언
     const prevRanks = JSON.parse('{{ prev_rank_list|safe }}');
-    console.log(prevRanks);
-    //const predictedData = JSON.parse('{{ predicted_list|escapejs }}');
-    // 라벨로 사용할 배열 선언
-    // const prevDates = JSON.parse('{{ prev_date_list|escapejs }}')
+    // 랭킹 데이터와 매칭되는 날짜 문자열 배열(JSON 형식)을 JS 변수로 선언
     const prevDates = JSON.parse('{{ prev_date_list|safe }}');
-
+    // 전 주 랭킹과 현재 주 모델의 예측 랭킹이 저장된 배열(JSON 형식)을 JS 변수로 선언
     const predictedRanks = JSON.parse('{{ predicted_rank_list|safe }}');
     
-    console.log(prevDates)
-    // 라벨 배열에 "n(1~52)주차" 문자열을 저장 
-    // for (let i = 1; i <= prevRanks.length; ++i) {
-    //     labels.push(i.toString() + "주차");
-    // }
-    // labels[labels.length - 1] += " 예측";
-    // 차트에 넣을 데이터 객체 선언
     const data = {
+        // x축 라벨(텍스트)는 해당하는 날짜 문자열로 지정
         labels: prevDates, 
         // 데이터셋 목록 설정(데이터 개수를 2개 이상 설정할 수도 있음)
         datasets: [
-            {
+            {   
+                // 첫번째 그래프는 곡의 현재 날짜까지의 역대 랭킹을 선으로 표현
                 label: '주간 차트 순위', // 데이터 라벨(텍스트) 설정
-                data: prevRanks, // 출력할 데이터 설정
-                borderColor: 'red' // 선 색깔 설정
+                data: prevRanks, // 그래프에 실제 랭킹 입력
+                borderColor: 'red' // 실제 데이터는 빨간색 선
             },
-            {
-                label: '예측 차트 순위',
-                data: predictedRanks,
-                borderColor: 'orange',
-                borderDash: [5, 5],
+            {   
+                // 두번째 그래프는 곡의 1주 전 실제 랭킹과 예측 랭킹을 선으로 표현
+                label: '예측 차트 순위', // 데이터 라벨(텍스트) 설정
+                data: predictedRanks, // 그래프에 예측값 입력
+                borderColor: 'orange', // 예측 데이터는 주황색 선
+                borderDash: [5, 5], // 예측 데이터를 점선으로 표현
             }
         ]
     };
@@ -146,7 +141,7 @@
                 responsive: true, // 반응형 차트 설정
                 maintainAspectRatio: false, // false 해두지 않으면 차트 크기가 한번 작아지면 다시 커지지 않는 현상 발생
                 plugins: { 
-                    title: { // 차트 타이틀 설정(크기가 너무 개미눈물만한데 수정할 수 있을지 추후 확인, 아니면 그냥 별도 h1 태그를 출력해도 되고)
+                    title: { // 차트 타이틀 설정
                         display: true,
                         text: '주간 랭크 추이 및 예측'
                     },
@@ -168,7 +163,7 @@
                             display: true,
                             text: '순위'
                         },
-                        min: {{min_rank}},
+                        min: {{min_rank}}, // 곡의 랭킹 추이에 맞게 그래프 범위를 적당하게 설정
                         max: {{max_rank}},
                         reverse: true, // 기본 세팅은 아래쪽이 작은 값, 위쪽이 큰 값인데 우리는 순위 데이터를 사용하니 반대로 설정
                     }
