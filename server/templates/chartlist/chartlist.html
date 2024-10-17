@@ -382,11 +382,17 @@ body {
             </thead>
             <tbody>
                 {% for row in chart_data %}
-                <tr class="chart-content" onclick="location.href = '/chartlist/{{date}}/{{row|index:0}}';">
-                    {% for row_data in row %}
-                    <td>{{ row_data }}</td>
-                    {% endfor %}
-                </tr>
+                    <tr class="chart-content" onclick="location.href = '/chartlist/{{date}}/{{row.Week_Rank}}';">
+                        <td>
+                            {{row.Week_Rank}}
+                        </td>
+                        <td>
+                            {{row.Title}}
+                        </td>
+                        <td>
+                            {{row.Artist}}
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
