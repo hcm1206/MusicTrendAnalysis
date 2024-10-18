@@ -1,0 +1,64 @@
+파일명
+---index---.txt
+
+파일경로 
+MusicTrendAnalysis\1_WebCrawling\jihun_datacrawling\---index---.txt
+
+파일내용
+
+analysis.ipynb
+    유튜브조회수 크롤링
+
+artist_trends_32_20241001.csv
+    date,Title,Artist,변환한이름,Score
+
+bs4 chart copy.py
+    금영차트 크롤링
+
+circle_chart_data_with_dates.csv
+    date,Rank,Title,Artist,Production
+circle_chart_data(20240926)_with_new_artist.csv
+    date,Rank,Title,Artist,Production,Weekly Views,Genre,Runtime,New_Artist
+circle_chart_data(20240927)_jihoon.csv
+    ,date,Rank,Title,Artist,Production,Weekly Views,Genre,Runtime,New_Artist,ky_rank
+circle_chart_data(20241002)_jihoon.csv
+    date,Rank,Title,Artist,Production,Weekly Views,Genre,Runtime,New_Artist,ky_rank,n_score
+circle_chart_with_trends(20241002).csv
+    date,Rank,Title,Artist,Production,Weekly Views,Genre,Runtime,New_Artist,ky_rank,n_score,g_score
+circle_chart_with_youtube_views_cleaned.csv
+    date,Rank,Artist,Weekly Views
+circle_chart_with_youtube_views.csv
+    date,Rank_x,Title,Artist,Production,Rank_y,Weekly Views
+circle_chart.py
+    써클차트 크롤링
+    
+
+circlechart.html
+    써클차트 html 페이지 긁어오기
+
+final_merged_file.csv
+    ,date,Rank,Title,Artist,Production,Weekly Views,Genre,Runtime,New_Artist,ky_rank,ratio,ratio_unmatched
+final_merged.csv
+    ,date,Rank,Title,Artist,Production,Weekly Views,Genre,Runtime,New_Artist,ky_rank,ratio
+finish.csv
+    New_Artist,date,ratio
+ky_singing_popular_chart.csv
+    date,rank,song,singer
+merged_artist_data.csv
+    MusicTrendAnalysis/1_WebCrawling/jihun_datacrawling/merged_artist_data.csv
+
+mg.png
+    뉴진스 민지 사진
+
+naverapi.ipynb
+    n_score 크롤링
+
+selenium youtube chart.py
+    유튜브 조회수 크롤링
+
+unmatched_score.csv
+    New_Artist,date,ratio
+youtube_artist_weekly_chart_52weeks.csv
+    Week,Rank,Artist,Weekly Views
+youtube_artist_weekly_chart.csv
+    Rank,Artist,Weekly Views
