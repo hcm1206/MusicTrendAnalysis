@@ -4,12 +4,13 @@
 /* 메인페이지의 콘텐츠 전체를 감싸는 틀 */
 #main-wrapper {
     display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
     align-items: center;
-    text-align: center;
-    flex-direction: column;
+    text-align: left; /* 왼쪽 정렬 */
+    flex-direction: row; /* 가로 배치 */
     padding: 0 10%;
     min-height: calc(100vh - 150px);
-    transition-property: "background-color";
+    transition-property: background-color;
     transition: 1s;
 }
 
@@ -24,7 +25,7 @@
     flex-direction: column;
 }
 
-/* 그냥 버튼 디자인 */
+/* 버튼 디자인 */
 #buttonSection div {
     display: flex;
     justify-content: center;
@@ -46,4 +47,8 @@
 
 #testbutton {
     background-color: lime;
+}
+
+#chartlistbutton {
+    background-color: navajowhite;
 }
