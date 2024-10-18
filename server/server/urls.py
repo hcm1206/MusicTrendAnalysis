@@ -22,5 +22,6 @@ urlpatterns = [
     path('', views.mainPage), # 루트(메인) 페이지
     path('test/', include('testapp.urls')), # 테스트 서브앱 루트 URL 설정
     path('chart/', include('chart.urls')), # 차트 앱 루트 URL 설정
+    path('chartlist/', include('chartlist.urls')), # 차트리스트 앱 루트 URL 설정
     path('admin/', admin.site.urls),
 ]

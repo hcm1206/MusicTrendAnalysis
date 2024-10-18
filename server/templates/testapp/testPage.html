@@ -32,8 +32,43 @@
 <div id="main-wrapper">
     <h1>테스트용 페이지입니다.</h1>
 </div>
-{% endblock %}
+<div>
+<h1>CSV 데이터</h1>
+<form method="post" action="{% url 'testapp:import_csv_to_db' %}"></form>
+    {% csrf_token %}
+    <input type="hidden" name="csv_content" value="{{ csv_content }}">
+    <table border="1">
+        <thead>
+            <tr>
+                <th>고객번호</th>
+                <th>고객회사명</th>
+                <th>담당자명</th>
+                <th>담당자직위</th>
+                <th>주소</th>
+                <th>도시</th>
+                <th>지역</th>
+                <th>전화번호</th>
+                <th>마일리지</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in csv_data %}
+            <tr>
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
+<div>
+    <h1><a href="{% url 'testapp:export_to_csv' %}" class="btn btn-primary">CSV 파일로 내보내기</a></h1>
+</div>
+
+
+{% endblock %}
 <!-- 페이지 로드 후에 실행할 스크립트 공간 -->
 {% block endscript %}
 

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}TBL_MA 목록{% endblock %}
+
+{% block content %}
+<h1>TBL_MA 목록</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Week_Date</th>
+            <th>Week_Rank</th>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Production</th>
+            <th>Weekly_Views</th>
+            <th>Genre</th>
+            <th>Runtime</th>
+            <th>New_Artist</th>
+            <th>n_score</th>
+            <th>g_score</th>
+            <th>Rank_lag_1</th>
+            <th>Rank_lag_2</th>
+            <th>Rank_lag_3</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in page_obj %}
+        <tr>
+            <td>{{ row.Week_Date }}</td>
+            <td>{{ row.Week_Rank }}</td>
+            <td>{{ row.Title }}</td>
+            <td>{{ row.Artist }}</td>
+            <td>{{ row.Production }}</td>
+            <td>{{ row.Weekly_Views }}</td>
+            <td>{{ row.Genre }}</td>
+            <td>{{ row.Runtime }}</td>
+            <td>{{ row.New_Artist }}</td>
+            <td>{{ row.n_score }}</td>
+            <td>{{ row.g_score }}</td>
+            <td>{{ row.Rank_lag_1 }}</td>
+            <td>{{ row.Rank_lag_2 }}</td>
+            <td>{{ row.Rank_lag_3 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="14">데이터가 없습니다.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- 페이지 네비게이션 -->
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; 처음</a>
+            <a href="?page={{ page_obj.previous_page_number }}">이전</a>
+        {% endif %}
+
+        <span class="current">
+            페이지 {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">다음</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">마지막 &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
