@@ -316,8 +316,31 @@ body {
     transition: background-color 0.3s ease;  /* 배경색 변경 시 부드러운 전환 효과 */
 }
 
+#top-btn {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background-color: lightskyblue;
+    opacity: .5;
+    bottom: 5vw;
+    right: 5vw;
+    cursor: pointer;
+    font-family: "suite-eb";
+    font-weight: "bolder";
+    font-size: 15px;
+    transition: .3s;
+    transition-property: transform, opacity;
+}
 
-
+#top-btn:hover {
+    transition: .3s;
+    transform: scale(1.1);
+    opacity: .8;
+}
 
 
 </style>
@@ -391,6 +414,9 @@ body {
             </tbody>
         </table>
     </div>
+</div>
+<div id="top-btn">
+    TOP
 </div>
 {% endblock %}
 
@@ -584,6 +610,9 @@ window.addEventListener('scroll', function() {
         document.body.style.backgroundColor = `hsl(${hue}, 100%, ${lightness}%)`;
     });
 
+document.getElementById("top-btn").addEventListener("click", () => {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+})
 
 </script>
 {% endblock %}

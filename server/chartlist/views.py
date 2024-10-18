@@ -178,6 +178,7 @@ def chartSongPage(request, date, rank):
         'year' : checkday.year,
         'month' : checkday.month,
         'day' : checkday.day,
+        'date' : checkday.strftime('%Y-%m-%d'),
         'rank' : rank,
         'title' : title,
         'artist' : artist,

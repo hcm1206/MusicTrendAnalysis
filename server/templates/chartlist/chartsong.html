@@ -11,41 +11,215 @@
         padding: 0 10%;
     }
 
-    h1 {
-        margin: 30px 0;
+    #title-wrapper {
+        margin-top: 30px;
+        padding: 0 10%;
+    }
+    #title-wrapper > div {
+        padding: 0 10px;
+        text-align: left;
+        transition: .3s;
+        transition-property: transform;
+    }
+    #title-wrapper > div:hover {
+        transform: scale(1.05);
+        transition: .3s;
+    }
+    #song-title {
+        font-weight: "suite-eb";
+        font-size: 50px;
+        font-weight: bolder;
+        padding-bottom: 10px;
+    }
+    #song-artist {
+        margin-top: 20px;
+        font-weight: "suite-b";
+        font-size: 30px;
+        font-weight: bold;
+    }
+    #song-production {
+        margin: 5px 0;
+        font-weight: "suite";
+        font-size: 20px;
     }
 
-    h2 {
-        margin: 20px 0;
-    }
-
-    #table-wrapper {
+    #info-wrapper {
+        margin-top: 30px;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
+        flex-direction: row;
+        padding: 0 10%;
     }
-    table {
-        border: 1px solid gray;
-        border-collapse: collapse;
-        width: 80%;
-        margin-left: 10%;
+
+    #info-wrapper > div {
+        border-top: gray 1px solid;
+        border-bottom: gray 1px solid;
+        flex: 1;
     }
-    th {
-        border: 1px solid gray;
+    #info-wrapper > div:first-child {
+        border-right: gray 1px solid;
     }
-    td {
-        border: 1px solid gray;
-        height: 40px;
+
+    .info-label {
+        background-color: lightgray;
+        padding: 10px 0;
+        font-size: 20px;
     }
+    .info-value {
+        margin: 20px 0;
+        font-weight: bold;
+        font-size: 30px;
+        transition: .3s;
+        transition-property: transform;
+    }
+    .info-value:hover {
+        transform: scale(1.2);
+        transition: .3s;
+    }
+
+    #new-song-wrapper {
+        margin: 30px 0;
+        padding: 0 10px;
+    }
+
+    #new-song-wrapper > h1 {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+
     #chart-wrapper {
         width:80%; 
         padding-left: 10%; 
-        margin: 50px 0;
     }
     #chart-wrapper canvas {
         width: 100%;
     }
+
+    #rank-wrapper {
+        margin-top: 30px;
+    }
+
+    #rank-date {
+        margin-top: 30px;
+        padding: 0 10%;
+        font-family: "suite-b";
+        font-weight: bold;
+        font-size: 25px;
+        text-align: left;
+    }
+
+    #rank-num-wrapper {
+        display: flex;
+        flex-direction: row;
+        margin: 0 50px;
+        padding: 0 10%;
+    }
+    .rank-num {
+        flex: 1;
+    }
+
+    .rank-label {
+        margin-top: 30px;
+        font-family: "suite-eb";
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .rank-value {
+        display: flex;
+        justify-content: center;
+    }
+
+    #real-rank {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 100px;
+        border-radius: 25px;
+        background-color: red;
+        color: white;
+        font-family: "suite-eb";
+        font-weight: bolder;
+        font-size: 50px;
+        transition: .3s;
+        transition-property: transform, box-shadow;
+    }
+
+    #real-rank:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px red;
+        transition: .3s;
+    }
+
+    #predicted-rank {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 100px;
+        border-radius: 25px;
+        background-color: orange;
+        color: white;
+        font-family: "suite-eb";
+        font-weight: bolder;
+        font-size: 50px;
+        transition: .3s;
+        transition-property: transform, box-shadow;
+    }
+
+    #predicted-rank:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px orange;
+        transition: .3s;
+    }
+
+    #accuracy-warning {
+        font-size: 30px;
+        color: orange;
+    }
+
+    #list-btn-wrapper {
+        margin: 0 10%;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #list-btn {
+        margin: 40px 0;
+        width: 120px;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgray;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 20px;
+        font-family: "suite-b";
+        transition: .3s;
+        transition-property: box-shadow, transform;
+    }
+    #list-btn:hover {
+        transform: scale(1.05);
+       box-shadow:  0 4px 15px gray;
+       transition: .3s;
+    }
+
+    @media (max-width: 800px) {
+        #info-wrapper {
+            flex-direction: column;
+        }
+        #info-wrapper > div:first-child {
+            border-right: none;
+        }
+        #rank-num-wrapper {
+            flex-direction: column;
+        }
+    }
+
 </style>
 {% endblock %}
 
@@ -57,46 +231,55 @@
 
 {% block content %}
 <div id="content-wrapper">
-    <h1>{{year}}년 {{month}}월 {{day}}일</h1>
-    <!-- 곡 정보를 테이블로 출력 -->
-    <table>
-        <tr>
-            <th>랭킹</th>
-            <td>{{rank}}</td>
-        </tr>
-        <tr>
-            <th>제목</th>
-            <td>{{title}}</td>
-        </tr>
-        <tr>
-            <th>가수</th>
-            <td>{{artist}}</td>
-        </tr>
-        <tr>
-            <th>소속사</th>
-            <td>{{production}}</td>
-        </tr>
-        <tr>
-            <th>장르</th>
-            <td>{{genre}}</td>
-        </tr>
-        <tr>
-            <th>재생시간</th>
-            <td>{{runtime}}</td>
-        </tr>
-    </table>
-    {% if chart_length <= 1 %} <!-- 이전 주차 랭킹 데이터가 없다면 새로 발매된 곡이라는 의미이므로 차트와 예측 순위를 출력하지 않음 -->
-        <h1>New Song!</h1>
-        <h3>해당 주에 발매된 신곡입니다.</h3>
-    {% else %}
-        <h1>모델 예측 순위 : {{predicted_rank}}위</h1>
-        {% if chart_length <= 4 %} <!-- 과거 랭킹 데이터가 3개 이하이면 예측 성능 문제 경고를 출력 -->
-            <h3>예측 정확도가 낮을 수 있습니다.</h3>
-        {% endif %}
-        <div id="chart-wrapper">
-            <canvas id="chart"></canvas> <!-- 현재 곡의 역대 랭킹 그래프 출력 태그 -->
+    <div id="title-wrapper">
+        <div id="song-title">{{title}}</div>
+        <div id="song-artist">{{artist}}</div>
+        <div id="song-production">{{production}}</div>
+    </div>
+    <div id="info-wrapper">
+        <div>
+            <div class="info-label">장르</div>
+            <div class="info-value">{{genre}}</div>
         </div>
+        <div>
+            <div class="info-label">곡 길이</div>
+            <div class="info-value">{{runtime}}</div>
+        </div>
+    </div>
+    <div id="rank-date">{{year}}년 {{month}}월 {{day}}일 기준</div>
+    <!-- 곡 정보를 테이블로 출력 -->
+    {% if chart_length <= 1 %} <!-- 이전 주차 랭킹 데이터가 없다면 새로 발매된 곡이라는 의미이므로 차트와 예측 순위를 출력하지 않음 -->
+    <div id="new-song-wrapper">
+        <h1>New Song!</h1>
+        <h3>해당 주에 발매된 신곡 또는 역주행 곡입니다.</h3>
+    </div>
+    {% else %}
+    <div id="chart-wrapper">
+        <canvas id="chart"></canvas> <!-- 현재 곡의 역대 랭킹 그래프 출력 태그 -->
+    </div>
     {% endif %}
+    <div id="rank-num-wrapper">
+        <div class="rank-num">
+            <div class="rank-label">실제 랭킹</div>
+            <div class="rank-value">
+                <div id="real-rank">{{rank}}</div>
+            </div>
+        </div>
+        {% if chart_length > 1 %}
+        <div class="rank-num">
+            <div class="rank-label">예측 랭킹</div>
+            <div class="rank-value">
+                <div id="predicted-rank">{{predicted_rank}}</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% if 1 < chart_length and chart_length < 4 %} <!-- 과거 랭킹 데이터가 3개 이하이면 예측 성능 문제 경고를 출력 -->
+        <h3 id="accuracy-warning">⚠ 예측 정확도가 낮을 수 있습니다.</h3>
+    {% endif %}
+    <div id="list-btn-wrapper">
+        <div id="list-btn">목록으로</div>
+    </div>
 </div>
 {% endblock %}
 
@@ -113,7 +296,7 @@
     const data = {
         // x축 라벨(텍스트)는 해당하는 날짜 문자열로 지정
         labels: prevDates, 
-        // 데이터셋 목록 설정(데이터 개수를 2개 이상 설정할 수도 있음)
+        // 데이터셋 목록 설정
         datasets: [
             {   
                 // 첫번째 그래프는 곡의 현재 날짜까지의 역대 랭킹을 선으로 표현
@@ -171,5 +354,11 @@
             },
         }
     );
+
+    // 로고 클릭하면 메인페이지로 이동
+    document.getElementById('list-btn').addEventListener("click", (e) => {
+        location.href = '/chartlist/{{date}}';
+    });
+
 </script>
 {% endblock %}
