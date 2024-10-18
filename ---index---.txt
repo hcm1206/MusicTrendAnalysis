@@ -1,0 +1,9 @@
+파일명
+---index---.txt
+
+파일경로 
+\MusicTrendAnalysis\---index---.txt
+
+파일내용
+
+    
