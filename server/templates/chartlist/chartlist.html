@@ -201,7 +201,7 @@
 #loading-text {
     font-size: 4em;
     font-weight: bold;
-    color: #fff;
+    color: orange;
     text-transform: uppercase;
     animation: fadeInText 1s ease forwards;
 }
@@ -264,17 +264,17 @@ th {
 }
 
 
-
-
 /* 기본 행 스타일 */
 .chart-content {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* 크기와 테두리 변화 애니메이션 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, font-weight 0.3s ease, font-family 0.3s ease;  /* 크기와 테두리 변화 애니메이션 */
 }
 
 /* 마우스를 올렸을 때 행이 살짝 커지고 테두리가 빛나게 함 */
 .chart-content:hover {
     transform: scale(1.03);  /* 3% 확대 */
     box-shadow: 0 4px 15px rgba(225, 145, 40, 0.9);   /* 테두리가 빛나도록 */
+    font-weight: bold;
+    font-family: "suite-eb"
 }
 
 
@@ -286,11 +286,15 @@ th {
     cursor: pointer;
     margin: 0 10px;
     color: #666;
-    transition: color 0.3s ease;
+    transition: 0.3s ease;
+    transition-property: color, text-shadow;
 }
 
 .date-arrow:hover {
     color: #000;
+    text-shadow: 0px 0px 5px black;
+    transition: 0.3s ease;
+    transition-property: color, text-shadow;
 }
 
 
@@ -379,9 +383,6 @@ body {
             <span class="date-calendar-toggle-button"></span>
             <input type="date" id="date-calendar-input">
         </span>
-
-
-
 
 
     </div>
@@ -529,15 +530,6 @@ document.getElementById('artist-header').addEventListener('mouseenter', function
 
         // 입력 필드 업데이트
         dateInput.value = sundayDate;
-
-        // 페이지 내 날짜 표시 업데이트
-        const dateLabel = document.getElementById('date-label');
-        const sunday = new Date(sundayDate);
-        const year = sunday.getFullYear();
-        const month = ('0' + (sunday.getMonth() + 1)).slice(-2);  // 월 2자리 형식
-        const day = ('0' + sunday.getDate()).slice(-2);  // 일 2자리 형식
-
-        dateLabel.textContent = `${year}년 ${month}월 ${day}일 기준`;  // 일요일 날짜 표시
 
         // 페이지 이동
         location.href = `/chartlist/${sundayDate}`;  // 새로 계산된 일요일 날짜로 이동

@@ -1,97 +1,174 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %} 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Trends</title>
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <style>
+        body,html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* 이미지 배경색과 동일하게 설정 */
+        }
 
-<!-- 메인(프론트) 페이지 파트 -->
-<!-- 공사 중 : 현재 테스트용 메인 페이지 -->
+        #main-wrapper {
+            position: relative;
+            z-index: 1; /* 콘텐츠가 동영상보다 위에 오도록 설정 */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
 
-<!-- static 로드 -->
-{% load static %} 
+        #main-wrapper img {
+            max-width: 500px; /* 이미지 크기 조정 */
+            height: auto; /* 비율을 유지하면서 세로로 늘어나는 문제 해결 */
+            margin-right: 50px; /* 이미지와 버튼 사이 간격 */
+            object-fit: contain; /* 이미지 비율 유지 */
+            flex-shrink: 0; /* 이미지 크기를 줄이지 않도록 설정 */
+        }
 
-{% block title %}MainPage{% endblock %}
+        #buttonSection {
+            display: flex;
+            flex-direction: column; /* 버튼들을 수직으로 배치 */
+            gap: 3px; /* 버튼 사이 간격 */
+            justify-content: center;
+            align-items: center;
+        }
 
-{% block style %}
-<link rel="stylesheet" href="{% static 'css/mainPage.css' %}">
-<style>
-    body,html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        overflow: hidden; /* 이미지 배경색과 동일하게 설정 */
-    }
+        #buttonSection div {
+            padding: 10px 20px;
+            text-align: center;
+            border: 1px solid #000;
+            border-radius: 5px;
+            background-color: lightblue;
+        }
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* 콘텐츠 뒤에 배치하기 위해 설정 */
+            overflow: hidden;
+        }
 
-    #main-wrapper {
-        position: relative;
-        z-index: 1; /* 콘텐츠가 동영상보다 위에 오도록 설정 */
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-    }
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 동영상이 화면 전체를 덮도록 설정 */
+            filter: blur(8px); /* 흐릿하게 만들기 위한 블러 효과 */
+            opacity: 0.5; /* 약간 투명하게 설정 */
+            z-index: -1;
+        }
+        #vertical-effect {
+            position: absolute;
+            width: 100vw;
+            height: 40vh;
+            background-color: rgba(135, 206, 250, .3);
+            animation: moveVert 2s forwards ease-in-out; /* 애니메이션 적용 */
+        }
+        #horizental-effect {
+            position: absolute;
+            width: 30vw;
+            height: 100vh;
+            background-color: rgba(135, 206, 250, .3);
+            animation: moveHori 2s forwards ease-in-out; /* 애니메이션 적용 */
+        }
 
-    #main-wrapper img {
-        max-width: 500px; /* 이미지 크기 조정 */
-        height: auto; /* 비율을 유지하면서 세로로 늘어나는 문제 해결 */
-        margin-right: 50px; /* 이미지와 버튼 사이 간격 */
-        object-fit: contain; /* 이미지 비율 유지 */
-        flex-shrink: 0; /* 이미지 크기를 줄이지 않도록 설정 */
-    }
+        #main-title {
+            position: relative;
+            bottom: -40vh;
+            width: 65vw;
+            left: -70vw;
+            text-align: right;
+            font-family: "suite-eb";
+            font-weight: bolder;
+            font-size: 60px;
+        }
 
-    #buttonSection {
-        display: flex;
-        flex-direction: column; /* 버튼들을 수직으로 배치 */
-        gap: 3px; /* 버튼 사이 간격 */
-        justify-content: center;
-        align-items: center;
-    }
+        #main-desc {
+            position: relative;
+            top: 0;
+            right: 30vw;
+            padding: 30px;
+            text-align: right;
+            font-family: "suite";
+            font-weight: bold;
+            font-size: 30px;
+        }
 
-    #buttonSection div {
-        padding: 10px 20px;
-        text-align: center;
-        border: 1px solid #000;
-        border-radius: 5px;
-        background-color: lightblue;
-    }
-    .video-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1; /* 콘텐츠 뒤에 배치하기 위해 설정 */
-        overflow: hidden;
-    }
+        #link-btn {
+            width: 50%;
+            position: relative;
+            top: 45vh;
+            padding: 30px;
+            font-family: "suite-eb";
+            font-size: 30px;
+            font-weight: "bold";
+            color: black;
+            opacity: 1;
+            cursor: pointer;
+        }
 
-    .background-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* 동영상이 화면 전체를 덮도록 설정 */
-        filter: blur(8px); /* 흐릿하게 만들기 위한 블러 효과 */
-        opacity: 0.5; /* 약간 투명하게 설정 */
-        z-index: -1;
-    }
-</style>
-{% endblock %}
+        @keyframes moveVert {
+            0% {
+                bottom: -40vh; /* 시작 위치: 화면 밖 */
+            }
+            100% {
+                bottom: 0; /* 끝 위치: 화면 안 중앙 */
+            }
+        }
+        @keyframes moveHori {
+            0% {
+                right: -30vw; /* 시작 위치: 화면 밖 */
+            }
+            100% {
+                right: 0; /* 끝 위치: 화면 안 중앙 */
+            }
+        }
 
-{% block startscript %}
-{% endblock %}
-
-{% block content %}
-<div class="video-container">
-    <iframe  id="backgroundVideo" class="background-video" src="https://www.youtube.com/embed/gdZLi9oWNZg?autoplay=1&mute=1&loop=1&si=nGFJ4mqBcx_Bl6" frameborder="0" allow="autoplay; fullscreen"></iframe>
-</div>
-<div id="main-wrapper">
-    <img src="{% static 'jpg/나침반2.jpg' %}" alt="Compass Image">
-    <div id="buttonSection">
-        <div id="chartbutton">차트 예제</div>
-        <div id="testbutton">테스트 페이지</div>
-        <div id="chartlistbutton">차트 리스트</div>
+        @media (max-width: 800px) {
+            #main-desc {
+                font-size: 20px;
+            }
+            #link-btn {
+                font-size: 20px;
+            }
+        }
+        @media (max-height: 700px) {
+            #main-desc {
+                display: none;
+            }
+            #link-btn {
+                top: 20vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <iframe  id="backgroundVideo" class="background-video" src="https://www.youtube.com/embed/gdZLi9oWNZg?autoplay=1&mute=1&loop=1&si=nGFJ4mqBcx_Bl6" frameborder="0" allow="autoplay; fullscreen"></iframe>
     </div>
-</div>
-{% endblock %}
-
-{% block endscript %}
-<script src="{% static 'js/mainPage.js' %}"></script>
-{% endblock %}
+    <div id="main-wrapper">
+        <div id="vertical-effect">
+            <div id="main-desc">
+                Check Trends.<br>
+                Compare Predictions.
+            </div>
+        </div>
+        <div id="horizental-effect">
+            <div id="main-title">Music<br>Trends</div>
+            <div id="link-btn">바로가기 ➧</div>
+        </div>
+    </div>
+    <script src="{% static 'js/mainPage.js' %}"></script>
+</body>
+</html>
