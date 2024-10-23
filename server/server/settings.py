@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)jl)3fxi9sys0c$m=jnp8&3bpofe$1$(4lig$$l7g&l$u%)jp_
 # 실제 배포 시에는 False로 변경
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
